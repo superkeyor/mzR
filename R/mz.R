@@ -15,7 +15,7 @@ mz.precess = function(x,...){
 #' @return returns an invisible data frame
 #' @seealso \url{http://topepo.github.io/caret/available-models.html}
 #' @export
-mz.getModelInfo = function(model = NULL, regex = TRUE, ...){
+mz.models = function(model = NULL, regex = TRUE, ...){
     models = ez.header('model_label'=character(),'method'=character(),'type'=character(),'library'=character(),'tuning_parameters'=character())
     modelLists = caret::getModelInfo(model=model,regex=regex,...)
     for (theMethod in names(modelLists)) {
