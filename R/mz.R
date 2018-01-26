@@ -16,7 +16,7 @@ mz.precess = function(x,...){
 #' @seealso \url{http://topepo.github.io/caret/available-models.html}
 #' @export
 mz.getModelInfo = function(model = NULL, regex = TRUE, ...){
-    results = ez.header('model_label'=character(),'method'=character(),'type'=character(),'library'=character(),'tuning_parameters'=character())
+    models = ez.header('model_label'=character(),'method'=character(),'type'=character(),'library'=character(),'tuning_parameters'=character())
     modelLists = caret::getModelInfo(model=model,regex=regex,...)
     for (theMethod in names(modelLists)) {
         modelList = modelLists[[theMethod]]
@@ -24,8 +24,8 @@ mz.getModelInfo = function(model = NULL, regex = TRUE, ...){
         theType = toString(modelList$type)
         theLibrary = toString(modelList$library)
         theParameter = toString(paste0(modelList$parameters$parameter,' (',modelList$parameters$label,') '))
-        results = ez.append(results,list(theLabel,theMethod,theType,theLibrary,theParameter),print2screen=F)
+        models = ez.append(models,list(theLabel,theMethod,theType,theLibrary,theParameter),print2screen=F)
     }
-    View(results)
-    return(invisible(results))
+    View(models)
+    return(invisible(models))
 }
