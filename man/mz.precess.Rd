@@ -13,7 +13,7 @@ mz.precess(x, ...)
 reProcess + predict itself
 }
 \note{
-short for the following:
+short for the following example:
 \cr prep <- preProcess(x, method = c("BoxCox","center", "scale"))
 \cr x <- predict(prep, x)
 }
