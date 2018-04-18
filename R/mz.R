@@ -2,6 +2,9 @@
 #' preProcess + predict itself
 #' @description reProcess + predict itself
 #' @param x  x
+#' @note short for the following:
+#' \cr prep <- preProcess(x, method = c("BoxCox","center", "scale"))
+#' \cr x <- predict(prep, x)
 #' @export
 mz.precess = function(x,...){
   preProcessObj=caret::preProcess(x,...)
