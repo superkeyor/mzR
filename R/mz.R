@@ -30,5 +30,6 @@ mz.models = function(model = NULL, regex = TRUE, ...){
         models = ez.append(models,list(theLabel,theMethod,theType,theLibrary,theParameter),print2screen=F)
     }
     View(models)
+    cat(sprintf('caret::getModelInfo("%s")[[i]] to see more details\n',model))
     return(invisible(models))
 }
