@@ -11,6 +11,11 @@ mz.precess = function(x,...){
   return(predict(preProcessObj,x))
 }
 
+#' summaryFunction = fiveStats
+#' @description summaryFunction = fiveStats
+#' @export
+fiveStats <- function(...) c(twoClassSummary(...), defaultSummary(..))
+
 #' getModelInfo
 #' @description \code{\link[caret]{getModelInfo}}
 #' @param model train method name
