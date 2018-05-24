@@ -52,11 +52,11 @@ mz.friedman1 = function(n=100,p=50) {
   sigma <- 1
   sim <- mlbench::mlbench.friedman1(n, sd = sigma)
   colnames(sim$x) <- c(paste("real", 1:5, sep = ""),
-                       paste("uniform", 1:5, sep = ""))
+                       paste("uni", 1:5, sep = ""))
   correlate <- base::jitter(sim$x[,1:5],factor=5000)
-  colnames(correlate) <- paste("correlate", 1:5, sep = "")
+  colnames(correlate) <- paste("cor", 1:5, sep = "")
   normal <- matrix(rnorm(n * p), nrow = n)
-  colnames(normal) <- paste("normal", 5+(1:ncol(normal)), sep = "")
+  colnames(normal) <- paste("norm", 5+(1:ncol(normal)), sep = "")
   x <- cbind(sim$x, correlate, normal)
   x = mz.precess(x,method = c("center", "scale"))
   y <- sim$y
