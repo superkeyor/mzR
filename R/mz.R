@@ -38,3 +38,27 @@ mz.models = function(model = NULL, regex = TRUE, ...){
     cat(sprintf('caret::getModelInfo("%s")[[i]] to see more details\n',model))
     return(invisible(models))
 }
+
+#' generate modified friedman1 data set: 5 real, 5 uniform noise, 5 correlated with real (rs>.97), p-15 normal noise
+#' @description generate modified friedman1 data set: 5 real, 5 uniform noise, 5 correlated with real, p-15 normal noise
+#' @param n sample size
+#' @param p total predictors (>15)
+#' @return returns a list of (y,x) y is numeric vector, x is numeric data frame (to matrix: data.matrix(x))
+#' @note y = 10sin(πx1x2) + 20(x3 − 0.5)^2 + 10x4 + 5x5 + e
+#' @export
+mz.friedman1 = function(n=100,p=50) {
+  set.seed(1)
+  p <- p - 15
+  sigma <- 1
+  sim <- mlbench::mlbench.friedman1(n, sd = sigma)
+  colnames(sim$x) <- c(paste("real", 1:5, sep = ""),
+                       paste("uniform", 1:5, sep = ""))
+  correlate <- base::jitter(sim$x[,1:5],factor=5000)
+  colnames(correlate) <- paste("correlate", 1:5, sep = "")
+  normal <- matrix(rnorm(n * p), nrow = n)
+  colnames(normal) <- paste("normal", 5+(1:ncol(normal)), sep = "")
+  x <- cbind(sim$x, correlate, normal)
+  y <- sim$y
+  x = as.data.frame(x)
+  return(list(y=y,x=x))
+}
