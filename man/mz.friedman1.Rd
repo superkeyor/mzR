@@ -12,7 +12,7 @@ mz.friedman1(n = 100, p = 50)
 \item{p}{total predictors (>15)}
 }
 \value{
-returns a list of (y,x) y is numeric vector, x is numeric data frame (to matrix: data.matrix(x))
+returns a list of (y,x) y is numeric vector, x is numeric data frame, already z scored (to matrix: data.matrix(x))
 }
 \description{
 generate modified friedman1 data set: 5 real, 5 uniform noise, 5 correlated with real, p-15 normal noise
