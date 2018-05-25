@@ -43,7 +43,7 @@ mz.models = function(model = NULL, regex = TRUE, ...){
 #' @description generate modified friedman1 data set: 5 real, 5 uniform noise, 5 correlated with real, p-15 normal noise
 #' @param n sample size
 #' @param p total predictors (>15)
-#' @return returns a list of (y,x,xy) y is numeric vector, x is numeric data frame, already z scored (to matrix: data.matrix(x)), xy is a data frame with xy
+#' @return y is numeric vector, x is numeric data frame, already z scored (to matrix: data.matrix(x)), xy is a data frame with xy
 #' @note y = 10sin(πx1x2) + 20(x3 − 0.5)^2 + 10x4 + 5x5 + e
 #' @export
 mz.friedman1 = function(n=100,p=55) {
@@ -62,5 +62,8 @@ mz.friedman1 = function(n=100,p=55) {
   y <- sim$y
   x = as.data.frame(x)
   xy = x; xy$y = y
-  return(list(y=y,x=x,xy=xy))
+  result = list(y=y,x=x,xy=xy)
+  # or list2env(.R_GlobalEnv)
+  list2env(result, globalenv())
+  return(invisible(NULL))
 }
