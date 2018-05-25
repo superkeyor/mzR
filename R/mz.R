@@ -67,3 +67,13 @@ mz.friedman1 = function(n=100,p=55) {
   list2env(result, globalenv())
   return(invisible(NULL))
 }
+
+#' sbf selected features: among resamples, univariate vars selected, how many times (or percentage) appeared in the resamples. col sorted by appearance percentage
+#' @description sbf selected features: among resamples, univariate vars selected, how many times (or percentage) appeared in the resamples. col sorted by appearance percentage
+#' @export
+mz.sbfself = function(sbfObj){
+  tmp = sort(table(unlist(sbfObj$variables)), decreasing = TRUE)
+  result = data.frame('var'=names(tmp),'appearance'=as.numeric(unname(tmp)/length(sbfObj$variables)))
+  return(result)
+}
+
