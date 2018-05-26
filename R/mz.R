@@ -11,6 +11,11 @@ mz.precess = function(x,...){
   return(predict(preProcessObj,x))
 }
 
+#' findCorrelation(data.matrix(x))
+#' @description findCorrelation(data.matrix(x))
+#' @export
+findCorrelation = function(x,...){caret::findCorrelation(data.matrix(x),...)}
+
 #' summaryFunction = fiveStats
 #' @description summaryFunction = fiveStats
 #' @export
