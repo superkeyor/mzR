@@ -18,5 +18,5 @@ y is numeric vector, x is numeric data frame, already z scored (to matrix: data.
 generate modified friedman1 data set: 5 real, 5 uniform noise, 5 correlated with real, p-15 normal noise
 }
 \note{
-y = 10sin(πx1x2) + 20(x3 − 0.5)^2 + 10x4 + 5x5 + e
+Y = 10sin(pi X1 X2) + 20(X3 − 0.5)^2 + 10 X4 + 5 X5 + e
 }

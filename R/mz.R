@@ -7,8 +7,8 @@
 #' \cr x <- predict(prep, x)
 #' @export
 mz.precess = function(x,...){
-  preProcessObj=caret::preProcess(x,...)
-  return(predict(preProcessObj,x))
+    preProcessObj=caret::preProcess(x,...)
+    return(predict(preProcessObj,x))
 }
 
 #' summaryFunction = fiveStats
@@ -44,36 +44,50 @@ mz.models = function(model = NULL, regex = TRUE, ...){
 #' @param n sample size
 #' @param p total predictors (>15)
 #' @return y is numeric vector, x is numeric data frame, already z scored (to matrix: data.matrix(x)), xy is a data frame with xy
-#' @note y = 10sin(πx1x2) + 20(x3 − 0.5)^2 + 10x4 + 5x5 + e
+#' @note Y = 10sin(pi X1 X2) + 20(X3 − 0.5)^2 + 10 X4 + 5 X5 + e
 #' @export
 mz.friedman1 = function(n=100,p=55) {
-  set.seed(1)
-  p <- p - 15
-  sigma <- 1
-  sim <- mlbench::mlbench.friedman1(n, sd = sigma)
-  colnames(sim$x) <- c(paste("real", 1:5, sep = ""),
-                       paste("uni", 1:5, sep = ""))
-  correlate <- base::jitter(sim$x[,1:5],factor=5000)
-  colnames(correlate) <- paste("cor", 1:5, sep = "")
-  normal <- matrix(rnorm(n * p), nrow = n)
-  colnames(normal) <- paste("norm", 1:ncol(normal), sep = "")
-  x <- cbind(sim$x, correlate, normal)
-  x = mz.precess(x,method = c("center", "scale"))
-  y <- sim$y
-  x = as.data.frame(x)
-  xy = x; xy$y = y
-  result = list(y=y,x=x,xy=xy)
-  # or list2env(.R_GlobalEnv)
-  list2env(result, globalenv())
-  return(invisible(NULL))
+    set.seed(1)
+    p <- p - 15
+    sigma <- 1
+    sim <- mlbench::mlbench.friedman1(n, sd = sigma)
+    colnames(sim$x) <- c(paste("real", 1:5, sep = ""),
+                         paste("uni", 1:5, sep = ""))
+    correlate <- base::jitter(sim$x[,1:5],factor=5000)
+    colnames(correlate) <- paste("cor", 1:5, sep = "")
+    normal <- matrix(rnorm(n * p), nrow = n)
+    colnames(normal) <- paste("norm", 1:ncol(normal), sep = "")
+    x <- cbind(sim$x, correlate, normal)
+    x = mz.precess(x,method = c("center", "scale"))
+    y <- sim$y
+    x = as.data.frame(x)
+    xy = x; xy$y = y
+    result = list(y=y,x=x,xy=xy)
+    # or list2env(.R_GlobalEnv)
+    list2env(result, globalenv())
+    return(invisible(NULL))
 }
 
 #' sbf selected features: among resamples, univariate vars selected, how many times (or percentage) appeared in the resamples. col sorted by appearance percentage
 #' @description sbf selected features: among resamples, univariate vars selected, how many times (or percentage) appeared in the resamples. col sorted by appearance percentage
 #' @export
 mz.sbfself = function(sbfObj){
-  tmp = sort(table(unlist(sbfObj$variables)), decreasing = TRUE)
-  result = data.frame('var'=names(tmp),'appearance'=as.numeric(unname(tmp)/length(sbfObj$variables)))
-  return(result)
+    tmp = sort(table(unlist(sbfObj$variables)), decreasing = TRUE)
+    result = data.frame('var'=names(tmp),'appearance'=as.numeric(unname(tmp)/length(sbfObj$variables)))
+    return(result)
 }
 
+#' only for RF: pass modrf, plot raw Importance >0, return a sorted df
+#' @description only for RF: pass modrf, plot Importance >0, return a sorted df
+#' @export
+varImpRF = function(modrf) {
+    varimprf = varImp(modrf,scale=F)
+    result = varimprf$importance %>% 
+             tibble::rownames_to_column(var='variable') %>% 
+             arrange(desc(Overall))
+
+    varimprf$importance = varimprf$importance[which(varimprf$importance>0),,drop=F]
+    varimprf %>% plot() %>% print()
+
+    return(invisible(result))
+}
