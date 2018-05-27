@@ -7,5 +7,5 @@
 varImpRF(modrf)
 }
 \description{
-only for RF: pass modrf, plot Importance >0, return a sorted df
+only for RF: pass modrf, plot Importance >0, return an invisible sorted df
 }

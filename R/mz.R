@@ -78,7 +78,7 @@ mz.sbfself = function(sbfObj){
 }
 
 #' only for RF: pass modrf, plot raw Importance >0, return a sorted df
-#' @description only for RF: pass modrf, plot Importance >0, return a sorted df
+#' @description only for RF: pass modrf, plot Importance >0, return an invisible sorted df
 #' @export
 varImpRF = function(modrf) {
     varimprf = varImp(modrf,scale=F)
@@ -88,6 +88,26 @@ varImpRF = function(modrf) {
 
     varimprf$importance = varimprf$importance[which(varimprf$importance>0),,drop=F]
     varimprf %>% plot() %>% print()
+
+    return(invisible(result))
+}
+
+#' only for RFE: pass rfeObj, plot optVar averaged importance across OptSized resamples, return an invisible df
+#' @description only for RFE: pass rfeObj, plot optVar averaged importance across OptSized resamples, return an invisible df
+#' @export
+varImpRFE = function(rfeObj) {
+    # see code https://github.com/topepo/caret/blob/master/pkg/caret/R/rfe.R#L1306
+    varimprfe = varImp(rfeObj,drop=T) 
+    # drop other variables that are not final optVar, when restricting to OptSize
+    result = varimprfe %>% 
+             tibble::rownames_to_column(var='variable') 
+    
+    # same code from https://github.com/topepo/caret/blob/master/pkg/caret/R/plot.varImp.train.R
+    tmp = result; names(tmp) = c('Feature','Importance')
+    featureNames <- tmp$Feature
+    tmp$Feature <- factor(rep(featureNames, 1),
+                          levels = rev(featureNames)) 
+    print(dotplot(Feature~Importance,tmp,panel = panel.needle))
 
     return(invisible(result))
 }
