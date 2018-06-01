@@ -80,8 +80,8 @@ mz.sbfself = function(sbfObj){
 #' only for RF: pass modrf, plot raw Importance >0, return a sorted df
 #' @description only for RF: pass modrf, plot Importance >0, return an invisible sorted df
 #' @export
-varImpRF = function(modrf,plot=T) {
-    varimprf = varImp(modrf,scale=F)
+varImpRF = function(modrf,plot=T,scale=F) {
+    varimprf = varImp(modrf,scale=scale)
     result = varimprf$importance %>% 
              tibble::rownames_to_column(var='variable') %>% 
              arrange(desc(Overall))
