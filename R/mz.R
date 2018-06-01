@@ -60,7 +60,7 @@ mz.friedman1 = function(n=100,p=55) {
     x <- cbind(sim$x, correlate, normal)
     x = mz.precess(x,method = c("center", "scale"))
     y <- sim$y
-    x = as.data.frame(x)
+    x = data.frame(x)
     xy = x; xy$y = y
     result = list(y=y,x=x,xy=xy)
     # or list2env(.R_GlobalEnv)
