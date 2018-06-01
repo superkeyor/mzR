@@ -4,7 +4,7 @@
 \alias{varImpRFE}
 \title{only for RFE: pass rfeObj, plot optVar averaged importance across OptSized resamples, return an invisible df}
 \usage{
-varImpRFE(rfeObj)
+varImpRFE(rfeObj, plot = T)
 }
 \description{
 only for RFE: pass rfeObj, plot optVar averaged importance across OptSized resamples, return an invisible df

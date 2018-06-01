@@ -4,7 +4,7 @@
 \alias{varImpRF}
 \title{only for RF: pass modrf, plot raw Importance >0, return a sorted df}
 \usage{
-varImpRF(modrf)
+varImpRF(modrf, plot = T)
 }
 \description{
 only for RF: pass modrf, plot Importance >0, return an invisible sorted df
