@@ -107,7 +107,13 @@ varImpRFE = function(rfeObj,plot=T) {
     featureNames <- tmp$Feature
     tmp$Feature <- factor(rep(featureNames, 1),
                           levels = rev(featureNames)) 
-    if (plot) print(dotplot(Feature~Importance,tmp,panel = panel.needle))
+    if (plot) print( lattice::dotplot(Feature~Importance,tmp,
+                    xlab = list(cex=2.5, fontfamily='Times New Roman'),
+                    ylab = list(cex=2.5, fontfamily='Times New Roman'),
+                    panel = panel.needle,
+                    panel = function(...) {
+                          panel.dotplot(..., col.line = "transparent")
+                    }) )
 
     return(invisible(result))
 }
