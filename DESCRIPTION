@@ -11,5 +11,5 @@ License: GNU3
 Encoding: UTF-8
 LazyData: true
 Imports:
-    devtools,roxygen2,ezR,caret
-RoxygenNote: 6.0.1
+    devtools,roxygen2,caret
+RoxygenNote: 7.1.2
